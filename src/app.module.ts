@@ -4,12 +4,13 @@ import { AppService } from './app.service';
 import { StudentsModule } from './students/students.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { StudentSchedulerModule } from './students/scheduler/studentScheduler.module';
+import { AuthModule } from './students/authguard/auth.module';
 
 @Module({
   imports: [StudentsModule,
     ScheduleModule.forRoot(),
-    //StudentRabbitMQModule,
-    StudentSchedulerModule
+    StudentSchedulerModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

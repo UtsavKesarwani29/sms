@@ -11,6 +11,8 @@ import { StudentSchedulerService } from './scheduler/studentScheduler.service';
 import { StudentRedisModule } from './redis/studentRedis.module';
 import { StudentRabbitMQModule } from './rabbitmq/studentRabbitMQ.module';
 import { StudentSchedulerModule } from './scheduler/studentScheduler.module';
+import { AuthService } from './authguard/auth.service';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -34,11 +36,16 @@ import { StudentSchedulerModule } from './scheduler/studentScheduler.module';
       StudentsRepository
     ]),
     StudentRabbitMQModule,
-    //StudentSchedulerModule
+    JwtModule.register({
+      secret : 'key',
+      signOptions : {
+        expiresIn : '60s'
+      }
+    })
   ],
   controllers: [StudentsController],
-  providers: [StudentsService,StudentsRepository,StudentRedisService],
-  //exports:[StudentsService]
+  providers: [StudentsService,StudentsRepository,StudentRedisService,AuthService],
+  exports:[StudentsService]
 })
 export class StudentsModule {
 }

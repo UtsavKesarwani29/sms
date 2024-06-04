@@ -6,6 +6,7 @@ import {v4 as uuidv4} from 'uuid';
 import { DeleteResult} from 'typeorm';
 import { StudentsRepository } from './repository/students.repository';
 import { StudentRabbitMQService } from './rabbitmq/studentRabbitMQ.service';
+import { User } from './entities/users.entity';
 
 
 @Injectable()
@@ -15,6 +16,25 @@ export class StudentsService {
     private readonly studentRepo:StudentsRepository,
     private readonly studentRabbitMQService: StudentRabbitMQService
     ) {}
+
+    public users : User[]=[
+      {
+        email:'utsav1@gmail.com',
+        password:'Utsav1',
+        username:'Utsav1',
+        role:'ADMIN'
+      },
+      {
+        email:'utsav2@gmail.com',
+        password:'Utsav2',
+        username:'Utsav2',
+        role:'USER'
+      }
+    ]
+
+    getUserByUserName(username:string):User{
+      return this.users.find((user)=>user.username===username);
+    }
 
   //CREATE
   async create(createStudentDto: CreateStudentDto) : Promise<Student> {
